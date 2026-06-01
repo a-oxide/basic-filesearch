@@ -272,7 +272,7 @@ for cat_label in "exact:exact filename" "ext:extension" "sub:substring" \
         fi
     fi
 done
-
+# this section is always present, for demonstration purposes. 
 echo ""
 
 echo "--- asymptotic complexity ---"
