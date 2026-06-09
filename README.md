@@ -2,6 +2,10 @@
 
 Compares linear array search vs hash table search for finding files on a filesystem. Uses podman to create a virtual ubuntu filesystem for testing. 
 
+Sources:
+https://cp-algorithms.com/string/string-hashing.html
+gemma3:4b for line completions.
+
 ## How it works
 
 1. Scans a directory for up to 100,000 files
