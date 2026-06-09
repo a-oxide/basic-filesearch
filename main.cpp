@@ -7,7 +7,7 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-const int SIZE = 997;
+const int SIZE = 10007;
 const int MAX_FILES = 100000;
 
 // pre: path is a valid file path
@@ -74,13 +74,13 @@ private:
 
     vector<string> table[SIZE];
 
-    // sum ascii values, mod SIZE
+    // polynomial hash with multiplier 31, mod SIZE
     int hashFunction(string key) {
-        int sum = 0;
+        int hash = 0;
         for (int i = 0; i < key.length(); i++) {
-            sum = sum + (int)key[i];
+            hash = (hash * 31 + (int)key[i]) % SIZE;
         }
-        return sum % SIZE;
+        return hash;
     }
 
 public:
@@ -97,6 +97,21 @@ public:
     // post: returns all matching file paths
     vector<string> search(string query) {
         vector<string> results;
+
+        // phase 1: try exact basename match via hash (O(1))
+        if (query.length() > 0 && query[0] != '.') {
+            int index = hashFunction(query);
+            for (int j = 0; j < table[index].size(); j++) {
+                if (getBasename(table[index][j]) == query) {
+                    results.push_back(table[index][j]);
+                }
+            }
+            if (results.size() > 0) {
+                return results;
+            }
+        }
+
+        // phase 2: full scan for substring/extension (O(n))
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < table[i].size(); j++) {
                 if (matches(table[i][j], query)) {

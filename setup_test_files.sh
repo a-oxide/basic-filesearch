@@ -45,8 +45,12 @@ for dir_name in "${FOLDER_NAMES[@]:0:$FOLDER_COUNT}"; do
         ext="${EXTENSIONS[$((RANDOM % ${#EXTENSIONS[@]}))]}"
         touch "$dir/${name}_${f}.${ext}"
     done
+    # create exact-named files for hash O(1) lookup testing
+    for name in readme index main config setup; do
+        touch "$dir/${name}"
+    done
 done
 
-total=$((FOLDER_COUNT * FILES_PER_FOLDER))
-echo "created $total test files in $BASE"
+total=$((FOLDER_COUNT * (FILES_PER_FOLDER + 5)))
+echo "created ~$total test files in $BASE"
 find "$BASE" -type f | wc -l
