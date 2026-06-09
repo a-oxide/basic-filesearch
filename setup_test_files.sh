@@ -1,5 +1,5 @@
 #!/bin/bash
-# creates ~50000 test files under /home/pi/testdata
+# creates ~50000 test files under /home/pi/testdata (created for rpi deployment)
 # usage: ./setup_test_files.sh [output_dir]
 
 BASE="${BASE:-${1:-/home/pi/testdata}}"

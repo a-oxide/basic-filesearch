@@ -14,18 +14,16 @@ BUILD_DIR="/tmp/opencode/docker_build"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 build_image() {
-    if ! podman image exists "$IMAGE" 2>/dev/null; then
-        echo ""
-        echo "==> building podman image..."
-        mkdir -p "$BUILD_DIR"
-        cp "$SCRIPT_DIR"/main.cpp "$SCRIPT_DIR"/Makefile \
-            "$SCRIPT_DIR"/Dockerfile "$SCRIPT_DIR"/*.sh \
-            "$BUILD_DIR/" 2>/dev/null
-        podman build -t "$IMAGE" "$BUILD_DIR"
-        echo ""
-        echo "==> build complete"
-        echo ""
-    fi
+    echo ""
+    echo "==> building podman image..."
+    mkdir -p "$BUILD_DIR"
+    cp "$SCRIPT_DIR"/main.cpp "$SCRIPT_DIR"/Makefile \
+        "$SCRIPT_DIR"/Dockerfile "$SCRIPT_DIR"/*.sh \
+        "$BUILD_DIR/" 2>/dev/null
+    podman build --no-cache -t "$IMAGE" "$BUILD_DIR"
+    echo ""
+    echo "==> build complete"
+    echo ""
 }
 
 case "${1:-menu}" in
@@ -67,11 +65,9 @@ case "${1:-menu}" in
     menu)
         build_image
         echo ""
-        echo "=============================="
         echo "  filesearch demo"
-        echo "=============================="
         echo ""
-        echo "  1) run automated test suite"
+        echo "  1) run automated tests"
         echo "  2) interactive shell"
         echo "  3) quit"
         echo ""

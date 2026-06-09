@@ -1,6 +1,5 @@
 #!/bin/bash
 # test_search.sh: comprehensive test suite for filesearch
-# runs hundreds of searches across edge cases and compares
 # linear vs hash table performance
 #
 # requires: ./filesearch binary and /home/pi/testdata
@@ -8,10 +7,7 @@
 
 ITERATIONS=5
 
-echo "============================================="
 echo "  filesearch performance test suite"
-echo "============================================="
-echo ""
 
 FILE_COUNT=$(find /home/pi/testdata -type f 2>/dev/null \
     | wc -l)
@@ -189,9 +185,7 @@ for case in "${TEST_CASES[@]}"; do
 done
 
 echo ""
-echo "============================================="
 echo "  SUMMARY"
-echo "============================================="
 echo ""
 
 AVG_LIN=$((TOTAL_LIN / COUNT))
@@ -204,9 +198,7 @@ printf "passed:          %d\n" "$PASS"
 printf "failed:          %d\n" "$FAIL"
 echo ""
 
-echo "============================================="
 echo "  TIMING CHART:  linear vs hash  (all in us)"
-echo "============================================="
 echo ""
 
 # overall row
@@ -272,7 +264,7 @@ for cat_label in "exact:exact filename" "ext:extension" "sub:substring" \
         fi
     fi
 done
-# this section is always present, for demonstration purposes. 
+
 echo ""
 
 echo "--- asymptotic complexity ---"
